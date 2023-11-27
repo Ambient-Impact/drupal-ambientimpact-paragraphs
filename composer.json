@@ -13,15 +13,8 @@
   "require": {
     "cweagans/composer-patches": "^1.7.0",
     "drupal/core": "^9.5 || ^10.0",
-    "drupal/geshifilter": "^2.0",
+    "drupal/geshifilter": "^3.0@dev",
     "drupal/hook_event_dispatcher": "^3.1 || ^4.0",
     "drupal/paragraphs": "^1.8.0"
-  },
-  "extra": {
-    "patches": {
-      "drupal/geshifilter": {
-        "Theme functions are deprecated in geshifield [#3137937]: https://www.drupal.org/project/geshifilter/issues/3137937#comment-13895126": "https://raw.githubusercontent.com/Ambient-Impact/drupal-modules/7.x/ambientimpact_paragraphs/patches/drupal/geshifilter/theme_function_deprecated--3137937-2.patch"
-      }
-    }
   }
 }
