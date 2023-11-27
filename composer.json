@@ -12,9 +12,10 @@
   ],
   "require": {
     "cweagans/composer-patches": "^1.7.0",
-    "drupal/paragraphs": "^1.8.0",
+    "drupal/core": "^9.5 || ^10.0",
     "drupal/geshifilter": "^2.0",
-    "drupal/hook_event_dispatcher": "^2.0 || ^3.0"
+    "drupal/hook_event_dispatcher": "^3.1 || ^4.0",
+    "drupal/paragraphs": "^1.8.0"
   },
   "extra": {
     "patches": {

@@ -2,7 +2,7 @@
 
 namespace Drupal\ambientimpact_paragraphs\EventSubscriber\EntityType;
 
-use Drupal\hook_event_dispatcher\HookEventDispatcherInterface;
+use Drupal\core_event_dispatcher\EntityHookEvents;
 use Drupal\core_event_dispatcher\Event\Entity\EntityTypeBuildEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -15,7 +15,7 @@ class EntityTypeBuildEventSubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents() {
     return [
-      HookEventDispatcherInterface::ENTITY_TYPE_BUILD => 'entityTypeBuild',
+      EntityHookEvents::ENTITY_TYPE_BUILD => 'entityTypeBuild',
     ];
   }
 

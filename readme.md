@@ -10,7 +10,7 @@ work-in-progress. Stable releases may be provided at a later date.
 
 # Requirements
 
-* [Drupal 9](https://www.drupal.org/download) ([Drupal 8 is end-of-life](https://www.drupal.org/psa-2021-11-30))
+* [Drupal 9.5 or 10](https://www.drupal.org/download)
 
 * [Composer](https://getcomposer.org/)
 
@@ -89,3 +89,15 @@ The following patches are supplied (see [Patching](#patching) above):
 * [GeSHi Filter module](https://www.drupal.org/project/geshifilter):
 
   * [Theme functions are deprecated in geshifield [#3137937]](https://www.drupal.org/project/geshifilter/issues/3137937#comment-13895126)
+
+----
+
+# Major breaking changes
+
+The following major version bumps indicate breaking changes:
+
+* 2.x:
+
+  * Requires Drupal 9.5 or [Drupal 10](https://www.drupal.org/project/drupal/releases/10.0.0) with compatibility and deprecation fixes for the latter.
+
+  * Increases minimum version of [Hook Event Dispatcher](https://www.drupal.org/project/hook_event_dispatcher) to 3.1, removes deprecated code, and adds support for 4.0 which supports Drupal 10.
