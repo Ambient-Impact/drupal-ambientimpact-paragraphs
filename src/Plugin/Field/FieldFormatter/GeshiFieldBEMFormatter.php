@@ -27,6 +27,7 @@ use Symfony\Component\DomCrawler\Crawler;
  * )
  */
 class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
+
   /**
    * The Drupal renderer service.
    *
@@ -71,12 +72,14 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
     array $thirdPartySettings,
     RendererInterface $renderer
   ) {
+
     parent::__construct(
       $pluginID, $pluginDefinition, $fieldDefinition, $settings, $label,
       $viewMode, $thirdPartySettings
     );
 
     $this->renderer = $renderer;
+
   }
 
   /**
@@ -88,6 +91,7 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
     $pluginID,
     $pluginDefinition
   ) {
+
     return new static(
       $pluginID,
       $pluginDefinition,
@@ -98,6 +102,7 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
       $configuration['third_party_settings'],
       $container->get('renderer')
     );
+
   }
 
   /**
@@ -176,9 +181,9 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
    *   Used to abstract away the class removal/addition.
    */
   protected function replaceGeshiClassAttr(
-    Crawler $crawler,
-    string  $removeClass,
-    string|array $addClasses,
+    Crawler       $crawler,
+    string        $removeClass,
+    string|array  $addClasses,
   ): void {
 
     /** @var \Symfony\Component\DomCrawler\Crawler */
@@ -205,16 +210,19 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langCode) {
+
     $elements = [];
     $enabledLanguages = GeshiFilter::getEnabledLanguages();
     $baseClass = 'code-highlighted';
 
     foreach ($items as $delta => $item) {
+
       $initialRenderArray = [
         '#theme'      => 'geshifield_default',
         '#language'   => $item->language,
         '#sourcecode' => $item->sourcecode,
       ];
+
       $languageHumanName = $enabledLanguages[$item->language];
 
       // Ideally, we wouldn't render here like the geshifield_default formatter
@@ -246,9 +254,11 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
         'me'  => 'method',
         'st'  => 'string',
       ] as $old => $new) {
+
         // Depending on the language, these can have up to (and possibly more
         // than) 5 variations.
         for ($i = 0; $i <= 5; $i++) {
+
           $this->replaceGeshiClassAttr(
             $crawler,
             $old . $i,
@@ -256,6 +266,7 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
           );
 
         }
+
       }
 
       // Code highlight classes that do *not* have numerical variations.
@@ -284,9 +295,9 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
         // any code altering the render array has these handy in a predictable
         // place.
         '#code_human_name'  => $languageHumanName,
-        '#base_class' => $baseClass,
+        '#base_class'       => $baseClass,
 
-        'pre'         => [
+        'pre' => [
           '#type'       => 'html_tag',
           '#tag'        => 'pre',
           '#attributes' => [
@@ -302,6 +313,7 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
     }
 
     return $elements;
+
   }
 
 }

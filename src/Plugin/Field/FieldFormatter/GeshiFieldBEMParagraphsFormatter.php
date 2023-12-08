@@ -26,6 +26,7 @@ use Drupal\ambientimpact_paragraphs\Plugin\Field\FieldFormatter\GeshiFieldBEMFor
  * )
  */
 class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
+
   use StringTranslationTrait;
 
   /**
@@ -76,6 +77,7 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
     RendererInterface $renderer,
     TranslationInterface $stringTranslation
   ) {
+
     parent::__construct(
       $pluginID, $pluginDefinition, $fieldDefinition, $settings, $label,
       $viewMode, $thirdPartySettings,
@@ -83,6 +85,7 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
     );
 
     $this->stringTranslation = $stringTranslation;
+
   }
 
   /**
@@ -94,6 +97,7 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
     $pluginID,
     $pluginDefinition
   ) {
+
     return new static(
       $pluginID,
       $pluginDefinition,
@@ -105,6 +109,7 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
       $container->get('renderer'),
       $container->get('string_translation')
     );
+
   }
 
   /**
@@ -113,9 +118,11 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
    * @todo Port the tab size from Drupal 7.
    */
   public function viewElements(FieldItemListInterface $items, $langCode) {
+
     $elements = parent::viewElements($items, $langCode);
 
     foreach ($elements as $delta => &$element) {
+
       $baseClass          = $element['#base_class'];
       $languageHumanName  = $element['#code_human_name'];
 
@@ -151,8 +158,11 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
           ),
         '#weight'     => -1,
       ];
+
     }
 
     return $elements;
+
   }
+
 }
