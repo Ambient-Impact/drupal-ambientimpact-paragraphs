@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\ambientimpact_paragraphs\EventSubscriber\EntityType;
 
+use Drupal\ambientimpact_paragraphs\ParagraphParentContentEntityURI;
 use Drupal\core_event_dispatcher\EntityHookEvents;
 use Drupal\core_event_dispatcher\Event\Entity\EntityTypeBuildEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -53,7 +54,7 @@ class EntityTypeBuildEventSubscriber implements EventSubscriberInterface {
     }
 
     $entityTypes['paragraph']->setUriCallback([
-      '\\Drupal\\ambientimpact_paragraphs\\ParagraphParentContentEntityURI',
+      ParagraphParentContentEntityURI::class,
       'URICallback',
     ]);
 
