@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\ambientimpact_paragraphs\EventSubscriber\EntityType;
 
 use Drupal\core_event_dispatcher\EntityHookEvents;
@@ -14,7 +16,7 @@ class EntityTypeBuildEventSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     return [
       EntityHookEvents::ENTITY_TYPE_BUILD => 'entityTypeBuild',
     ];
@@ -42,7 +44,7 @@ class EntityTypeBuildEventSubscriber implements EventSubscriberInterface {
    * @see \hook_entity_type_build()
    *   Hook documentation.
    */
-  public function entityTypeBuild(EntityTypeBuildEvent $event) {
+  public function entityTypeBuild(EntityTypeBuildEvent $event): void {
 
     $entityTypes = &$event->getEntityTypes();
 

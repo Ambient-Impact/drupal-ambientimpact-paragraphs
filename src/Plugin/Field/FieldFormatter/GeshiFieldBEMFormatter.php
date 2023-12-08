@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\ambientimpact_paragraphs\Plugin\Field\FieldFormatter;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -33,7 +35,7 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
    *
    * @var \Drupal\Core\Render\RendererInterface
    */
-  protected $renderer;
+  protected RendererInterface $renderer;
 
   /**
    * Constructs a GeshiFieldBEMFormatter object.
@@ -63,14 +65,14 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
    *   The Drupal renderer service.
    */
   public function __construct(
-    $pluginID,
-    $pluginDefinition,
+    string  $pluginID,
+    array   $pluginDefinition,
     FieldDefinitionInterface $fieldDefinition,
-    array $settings,
-    $label,
-    $viewMode,
-    array $thirdPartySettings,
-    RendererInterface $renderer
+    array   $settings,
+    string  $label,
+    string  $viewMode,
+    array   $thirdPartySettings,
+    RendererInterface $renderer,
   ) {
 
     parent::__construct(
@@ -89,7 +91,7 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
     ContainerInterface $container,
     array $configuration,
     $pluginID,
-    $pluginDefinition
+    $pluginDefinition,
   ) {
 
     return new static(
@@ -100,7 +102,7 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
-      $container->get('renderer')
+      $container->get('renderer'),
     );
 
   }
@@ -209,7 +211,9 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langCode) {
+  public function viewElements(
+    FieldItemListInterface $items, $langCode,
+  ): array {
 
     $elements = [];
     $enabledLanguages = GeshiFilter::getEnabledLanguages();

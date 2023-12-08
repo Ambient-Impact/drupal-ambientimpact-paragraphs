@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\ambientimpact_paragraphs\Plugin\Field\FieldFormatter;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -67,21 +69,21 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
    *   The Drupal string translation service.
    */
   public function __construct(
-    $pluginID,
-    $pluginDefinition,
+    string  $pluginID,
+    array   $pluginDefinition,
     FieldDefinitionInterface $fieldDefinition,
     array $settings,
-    $label,
-    $viewMode,
-    array $thirdPartySettings,
+    string  $label,
+    string  $viewMode,
+    array   $thirdPartySettings,
     RendererInterface $renderer,
-    TranslationInterface $stringTranslation
+    TranslationInterface $stringTranslation,
   ) {
 
     parent::__construct(
       $pluginID, $pluginDefinition, $fieldDefinition, $settings, $label,
       $viewMode, $thirdPartySettings,
-      $renderer
+      $renderer,
     );
 
     $this->stringTranslation = $stringTranslation;
@@ -95,7 +97,7 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
     ContainerInterface $container,
     array $configuration,
     $pluginID,
-    $pluginDefinition
+    $pluginDefinition,
   ) {
 
     return new static(
@@ -107,7 +109,7 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
       $configuration['view_mode'],
       $configuration['third_party_settings'],
       $container->get('renderer'),
-      $container->get('string_translation')
+      $container->get('string_translation'),
     );
 
   }
@@ -117,7 +119,9 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
    *
    * @todo Port the tab size from Drupal 7.
    */
-  public function viewElements(FieldItemListInterface $items, $langCode) {
+  public function viewElements(
+    FieldItemListInterface $items, $langCode,
+  ): array {
 
     $elements = parent::viewElements($items, $langCode);
 
