@@ -11,6 +11,7 @@
     }
   ],
   "require": {
+    "php": "^8.1",
     "cweagans/composer-patches": "^1.7.0",
     "drupal/core": "^9.5 || ^10.0",
     "drupal/geshifilter": "^3.0@dev",

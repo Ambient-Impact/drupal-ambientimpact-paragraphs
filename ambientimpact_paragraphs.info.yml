@@ -3,6 +3,7 @@ type: module
 description: Paragraph types and related code.
 package: Ambient.Impact
 core_version_requirement: ^9.5 || ^10.0
+php: 8.1
 
 dependencies:
   - drupal:media
