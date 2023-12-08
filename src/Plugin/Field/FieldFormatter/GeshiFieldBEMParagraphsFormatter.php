@@ -41,7 +41,7 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
   /**
    * Constructs a GeshiFieldBEMParagraphsFormatter object.
    *
-   * @param string $pluginID
+   * @param string $pluginId
    *   The plugin_id for the formatter.
    *
    * @param mixed $pluginDefinition
@@ -69,7 +69,7 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
    *   The Drupal string translation service.
    */
   public function __construct(
-    string  $pluginID,
+    string  $pluginId,
     array   $pluginDefinition,
     FieldDefinitionInterface $fieldDefinition,
     array $settings,
@@ -81,7 +81,7 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
   ) {
 
     parent::__construct(
-      $pluginID, $pluginDefinition, $fieldDefinition, $settings, $label,
+      $pluginId, $pluginDefinition, $fieldDefinition, $settings, $label,
       $viewMode, $thirdPartySettings,
       $renderer,
     );
@@ -96,12 +96,12 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
   public static function create(
     ContainerInterface $container,
     array $configuration,
-    $pluginID,
+    $pluginId,
     $pluginDefinition,
   ) {
 
     return new static(
-      $pluginID,
+      $pluginId,
       $pluginDefinition,
       $configuration['field_definition'],
       $configuration['settings'],
