@@ -32,13 +32,6 @@ class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
   use StringTranslationTrait;
 
   /**
-   * The Drupal string translation service.
-   *
-   * @var \Drupal\Core\StringTranslation\TranslationInterface
-   */
-  protected $stringTranslation;
-
-  /**
    * Constructs a GeshiFieldBEMParagraphsFormatter object.
    *
    * @param string $pluginId
