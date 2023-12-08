@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Drupal\ambientimpact_paragraphs\Plugin\Field\FieldFormatter;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\geshifilter\GeshiFilter;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**

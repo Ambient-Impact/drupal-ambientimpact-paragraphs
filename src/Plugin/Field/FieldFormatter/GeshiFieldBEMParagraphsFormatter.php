@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Drupal\ambientimpact_paragraphs\Plugin\Field\FieldFormatter;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\ambientimpact_paragraphs\Plugin\Field\FieldFormatter\GeshiFieldBEMFormatter;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
-use Drupal\ambientimpact_paragraphs\Plugin\Field\FieldFormatter\GeshiFieldBEMFormatter;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'geshifield_bem_paragraphs' formatter.
