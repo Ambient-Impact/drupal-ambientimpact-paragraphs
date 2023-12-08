@@ -31,13 +31,6 @@ use Symfony\Component\DomCrawler\Crawler;
 class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The Drupal renderer service.
-   *
-   * @var \Drupal\Core\Render\RendererInterface
-   */
-  protected RendererInterface $renderer;
-
-  /**
    * Constructs a GeshiFieldBEMFormatter object.
    *
    * @param string $pluginID
@@ -72,15 +65,13 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
     string  $label,
     string  $viewMode,
     array   $thirdPartySettings,
-    RendererInterface $renderer,
+    protected readonly RendererInterface $renderer,
   ) {
 
     parent::__construct(
       $pluginID, $pluginDefinition, $fieldDefinition, $settings, $label,
       $viewMode, $thirdPartySettings
     );
-
-    $this->renderer = $renderer;
 
   }
 
