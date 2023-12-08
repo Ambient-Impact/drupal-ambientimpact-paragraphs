@@ -16,6 +16,8 @@
     "drupal/core": "^9.5 || ^10.0",
     "drupal/geshifilter": "^3.0@dev",
     "drupal/hook_event_dispatcher": "^3.1 || ^4.0",
-    "drupal/paragraphs": "^1.8.0"
+    "drupal/paragraphs": "^1.8.0",
+    "symfony/css-selector": "^6.2",
+    "symfony/dom-crawler": "^6.2"
   }
 }

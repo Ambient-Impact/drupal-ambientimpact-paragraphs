@@ -8,7 +8,9 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Template\Attribute;
 use Drupal\geshifilter\GeshiFilter;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Plugin implementation of the 'geshifield_bem' formatter.
@@ -99,6 +101,107 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
   }
 
   /**
+   * Unwrap the GeshiField container element contents.
+   *
+   * @param \Symfony\Component\DomCrawler\Crawler $crawler
+   *   Symfony DomCrawler instance containing elements to unwrap.
+   *
+   * @return \Symfony\Component\DomCrawler\Crawler
+   *
+   * @see \Drupal\geshifilter\GeshiFilterProcess::geshiProcess()
+   *
+   * @todo Alter a clone of the nodes and return that instead of altering the
+   *   original nodes to prevent partial unwrapping in case of error?
+   */
+  protected function unwrapGeshiContainer(Crawler $crawler): Crawler {
+
+    /** @var \Symfony\Component\DomCrawler\Crawler */
+    $preCrawler = $crawler->filter('pre');
+
+    // If we couldn't find a <pre> element or we found more than one, return the
+    // Crawler as-is.
+    if (
+      !($preCrawler->getNode(0) instanceof \DOMNode) ||
+      \count($preCrawler) > 1
+    ) {
+      return $crawler;
+    }
+
+    /** @var \DOMElement */
+    $container = $preCrawler->getNode(0);
+
+    /** @var \Symfony\Component\DomCrawler\Crawler */
+    $childNodesCrawler = $preCrawler->children();
+
+    for ($i = 0; $container->childNodes->length > 0; $i++) {
+
+      /** @var \DOMNode|false */
+      $result = $container->parentNode->insertBefore(
+        // Note that we always specify index "0" as we're basically removing the
+        // first child each time, similar to \array_shift(), and the child list
+        // updates each time we do this in the same way removing the bottom
+        // most card in a deck of cards on each iteration.
+        $container->childNodes->item(0),
+        $container
+      );
+
+      // If \DOMNode::insertBefore() returned false, return the original
+      // Crawler.
+      if ($result === false) {
+        return $crawler;
+      }
+
+    }
+
+    // Remove the now-empty node.
+    $container->parentNode->removeChild($container);
+
+    return $childNodesCrawler;
+
+  }
+
+  /**
+   * Replace GeSHi HTML class attributes with our own.
+   *
+   * @param \Symfony\Component\DomCrawler\Crawler $crawler
+   *   Symfony DomCrawler instance containing elements to alter.
+   *
+   * @param string $removeClass
+   *   A string class to remove.
+   *
+   * @param string|string[] $addClasses
+   *   A string or array of string classes to insert.
+   *
+   * @see \Drupal\Core\Template\Attribute
+   *   Used to abstract away the class removal/addition.
+   */
+  protected function replaceGeshiClassAttr(
+    Crawler $crawler,
+    string  $removeClass,
+    string|array $addClasses,
+  ): void {
+
+    /** @var \Symfony\Component\DomCrawler\Crawler */
+    $filteredCrawler = $crawler->filter('span.' . $removeClass);
+
+    foreach ($filteredCrawler as $element) {
+
+      /** @var \Drupal\Core\Template\Attribute */
+      $attributes = (new Attribute([]))->addClass(
+        \explode(' ', $element->getAttribute('class'))
+      );
+
+      $attributes->removeClass($removeClass)->addClass($addClasses);
+
+      $element->setAttribute(
+        'class', \trim(\implode(' ', $attributes->getClass()->value())),
+      );
+
+    }
+
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langCode) {
@@ -117,16 +220,20 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
       // Ideally, we wouldn't render here like the geshifield_default formatter
       // does, since it's against Drupal 8 best practices, but we need the
       // rendered GeSHi output. GeSHi doesn't provide any way to change the
-      // class names so we have to search and replace what it renders.
-      $renderedCode = $this->renderer->render($initialRenderArray);
+      // class names so we have to parse and alter what it renders.
+      $renderedCode = (string) $this->renderer->render($initialRenderArray);
 
-      // This array contains search and replace keys, which are arrays to be
-      // passed to str_replace.
-      // @see https://php.net/manual/en/function.str-replace.php
-      $codeReplacements = [
-        'search'  => [],
-        'replace' => [],
-      ];
+      /** @var \Symfony\Component\DomCrawler\Crawler */
+      $rootCrawler = new Crawler(
+        // The <div> is to prevent the PHP DOM automatically wrapping any
+        // top-level text content in a <p> element.
+        '<div id="ambientimpact-geshi-root">' . $renderedCode . '</div>',
+      );
+
+      /** @var \Symfony\Component\DomCrawler\Crawler */
+      $crawler = new Crawler(
+        $this->unwrapGeshiContainer($rootCrawler)->getNode(0)->parentNode,
+      );
 
       // Code highlight classes that have numerical variations.
       foreach ([
@@ -142,35 +249,27 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
         // Depending on the language, these can have up to (and possibly more
         // than) 5 variations.
         for ($i = 0; $i <= 5; $i++) {
-          $codeReplacements['search'][]   = '<span class="' . $old . $i . '">';
-          $codeReplacements['replace'][]  =
-            '<span class="' . $baseClass . '__' . $new . ' ' .
-              $baseClass . '__' . $new .'--' . $i . '">';
+          $this->replaceGeshiClassAttr(
+            $crawler,
+            $old . $i,
+            [$baseClass . '__' . $new, $baseClass . '__' . $new .'--' . $i],
+          );
+
         }
       }
 
       // Code highlight classes that do *not* have numerical variations.
       foreach ([
-        'st_h'    => 'string',
+        'st_h'    => $baseClass . '__string',
+        'coMULTI' => [
+          $baseClass . '__comment',
+          $baseClass . '__comment--multi-line',
+        ],
       ] as $old => $new) {
-        $codeReplacements['search'][]   = '<span class="' . $old . '">';
-        $codeReplacements['replace'][]  =
-          '<span class="' . $baseClass . '__' . $new . '">';
+
+        $this->replaceGeshiClassAttr($crawler, $old, $new);
+
       }
-
-      // Multi-line comments; these need to be handled separately because they
-      // need both the comment class and the modifier.
-      $codeReplacements['search'][]   = '<span class="coMULTI">';
-      $codeReplacements['replace'][]  =
-        '<span class="' . $baseClass . '__comment ' .
-          $baseClass . '__comment--multi-line">';
-
-      // Replace!
-      $renderedCode = str_replace(
-        $codeReplacements['search'],
-        $codeReplacements['replace'],
-        $renderedCode
-      );
 
       $elements[$delta] = [
         '#type'       => 'html_tag',
@@ -197,18 +296,7 @@ class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPl
             'data-code-language-human-name'   => $languageHumanName,
             'data-code-language-machine-name' => $item->language,
           ],
-          // Remove the wrapper elements generated by the geshifilter module.
-          // @see \Drupal\geshifilter\GeshiFilterProcess::geshiProcess()
-          '#value'      => preg_replace(
-            [
-              // Opening tags.
-              '/^<div class="geshifilter"><div class="[^"]+"><pre class="[^"]+">/',
-              // Closing tags.
-              '/<\/pre><\/div><\/div>$/',
-            ],
-            '',
-            $renderedCode
-          ),
+          '#value' => $crawler->html(),
         ],
       ];
     }
