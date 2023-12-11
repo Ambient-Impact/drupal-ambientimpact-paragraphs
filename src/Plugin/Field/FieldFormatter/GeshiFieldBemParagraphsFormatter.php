@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\ambientimpact_paragraphs\Plugin\Field\FieldFormatter;
 
-use Drupal\ambientimpact_paragraphs\Plugin\Field\FieldFormatter\GeshiFieldBEMFormatter;
+use Drupal\ambientimpact_paragraphs\Plugin\Field\FieldFormatter\GeshiFieldBemFormatter;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Render\RendererInterface;
@@ -27,7 +27,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   }
  * )
  */
-class GeshiFieldBEMParagraphsFormatter extends GeshiFieldBEMFormatter {
+class GeshiFieldBemParagraphsFormatter extends GeshiFieldBemFormatter {
 
   use StringTranslationTrait;
 

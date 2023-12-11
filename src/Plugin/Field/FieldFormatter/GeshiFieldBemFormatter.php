@@ -28,7 +28,7 @@ use Symfony\Component\DomCrawler\Crawler;
  *   }
  * )
  */
-class GeshiFieldBEMFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
+class GeshiFieldBemFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**
    * Constructs a GeshiFieldBEMFormatter object.

@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Update references to renamed field formatters and other classes.
+ */
+function ambientimpact_paragraphs_update_9201(): void {
+
+  \Drupal::service('plugin.manager.field.formatter')->clearCachedDefinitions();
+
+  \Drupal::service('entity_type.manager')->clearCachedDefinitions();
+
+  \Drupal::service('kernel')->invalidateContainer();
+
+}

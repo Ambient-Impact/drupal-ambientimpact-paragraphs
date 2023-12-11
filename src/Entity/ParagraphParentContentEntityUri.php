@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\ambientimpact_paragraphs;
+namespace Drupal\ambientimpact_paragraphs\Entity;
 
 use Drupal\Core\Url;
 use Drupal\paragraphs\Entity\ParagraphInterface;
@@ -10,7 +10,7 @@ use Drupal\paragraphs\Entity\ParagraphInterface;
 /**
  * Paragraph entity parent content entity URI class.
  */
-class ParagraphParentContentEntityURI {
+class ParagraphParentContentEntityUri {
 
   /**
    * Paragraph entity URI callback method.
@@ -36,7 +36,7 @@ class ParagraphParentContentEntityURI {
    * @todo Should we check if $parent->getEntityTypeId() === 'node' before
    * returning the node route? What if a node is not the parent entity?
    */
-  public static function URICallback(ParagraphInterface $paragraph): Url {
+  public static function uriCallback(ParagraphInterface $paragraph): Url {
 
     $parent = $paragraph->getParentEntity();
 
