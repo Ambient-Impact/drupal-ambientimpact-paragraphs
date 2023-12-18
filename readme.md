@@ -104,6 +104,6 @@ The following major version bumps indicate breaking changes:
 
   * Requires PHP 8.1 or newer.
 
-  * Increases minimum version of [Hook Event Dispatcher](https://www.drupal.org/project/hook_event_dispatcher) to 3.1, removes deprecated code, and adds support for 4.0 which supports Drupal 10.
+  * Switched from [Hook Event Dispatcher](https://www.drupal.org/project/hook_event_dispatcher) to [Hux](https://www.drupal.org/project/hux).
 
   * Several classes have been renamed or moved to be more in line with PHP, Drupal, and Symfony naming conventions. Don't forget to run database updates!

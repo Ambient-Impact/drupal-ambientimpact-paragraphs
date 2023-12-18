@@ -2,29 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Drupal\ambientimpact_paragraphs\EventSubscriber\Entity;
+namespace Drupal\ambientimpact_paragraphs\Hooks;
 
 use Drupal\ambientimpact_paragraphs\Entity\ParagraphParentContentEntityUri;
-use Drupal\core_event_dispatcher\EntityHookEvents;
-use Drupal\core_event_dispatcher\Event\Entity\EntityTypeBuildEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Drupal\hux\Attribute\Hook;
 
 /**
- * \hook_entity_type_build() event subscriber class.
+ * Entity hook implementations.
  */
-class EntityTypeBuildEventSubscriber implements EventSubscriberInterface {
+class Entity {
 
+  #[Hook('entity_type_build')]
   /**
-   * {@inheritdoc}
-   */
-  public static function getSubscribedEvents(): array {
-    return [
-      EntityHookEvents::ENTITY_TYPE_BUILD => 'onEntityTypeBuild',
-    ];
-  }
-
-  /**
-   * \hook_entity_type_build() event handler.
+   * Implements \hook_entity_type_build().
    *
    * This sets our own URI callback for 'paragraph' entity types if none is set
    * on the entity type. See the URI callback for more information.
@@ -45,9 +35,7 @@ class EntityTypeBuildEventSubscriber implements EventSubscriberInterface {
    * @see \hook_entity_type_build()
    *   Hook documentation.
    */
-  public function onEntityTypeBuild(EntityTypeBuildEvent $event): void {
-
-    $entityTypes = &$event->getEntityTypes();
+  public function entityTypeBuild(array &$entityTypes): void {
 
     if ($entityTypes['paragraph']->getUriCallback() !== null) {
       return;

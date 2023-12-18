@@ -14,3 +14,16 @@ function ambientimpact_paragraphs_update_9201(): void {
   \Drupal::service('kernel')->invalidateContainer();
 
 }
+
+/**
+ * Ensure Hux is installed if it isn't already.
+ */
+function ambientimpact_paragraphs_update_9202(): void {
+
+  // Force a container rebuild to ensure previous event subscriber is removed
+  // and Hux hook class is discovered.
+  \Drupal::service('kernel')->invalidateContainer();
+
+  \Drupal::service('module_installer')->install(['hux']);
+
+}

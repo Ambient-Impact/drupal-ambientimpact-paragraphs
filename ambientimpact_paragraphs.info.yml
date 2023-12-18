@@ -13,7 +13,7 @@ dependencies:
   - drupal:user
   - paragraphs:paragraphs
   - geshifield:geshifield
-  - hook_event_dispatcher:core_event_dispatcher
+  - hux:hux
 
 config_devel:
   install:

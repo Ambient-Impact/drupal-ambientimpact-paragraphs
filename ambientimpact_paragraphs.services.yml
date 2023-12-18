@@ -1,6 +1,0 @@
-services:
-
-  ambientimpact_paragraphs.entity_type_build_event_subscriber:
-    class: \Drupal\ambientimpact_paragraphs\EventSubscriber\Entity\EntityTypeBuildEventSubscriber
-    tags:
-      - { name: 'event_subscriber' }
