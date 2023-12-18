@@ -81,7 +81,7 @@ planned for the 2.x branch of the plug-in.
 ### Installing
 
 Once you've completed all of the above, run `composer require
-"drupal/ambientimpact_paragraphs:1.x-dev@dev"` in the root of your project to
+"drupal/ambientimpact_paragraphs:2.x-dev@dev"` in the root of your project to
 have Composer install this and its required dependencies for you.
 
 # Patches
