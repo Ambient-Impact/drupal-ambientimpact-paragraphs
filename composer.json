@@ -23,7 +23,7 @@
   "extra": {
     "patches": {
       "geshi/geshi": {
-        "Use MDN links for HTML5 syntax highlighting": "https://raw.githubusercontent.com/Ambient-Impact/drupal-ambientimpact-paragraphs/2.x/patches/geshi/geshi/html5-mdn-urls.patch"
+        "Use MDN links for HTML5 syntax highlighting": "https://raw.githubusercontent.com/Ambient-Impact/drupal-ambientimpact-paragraphs/3e6afd922863f2fd90406756a20ab25de3d09a3c/patches/geshi/geshi/html5-mdn-urls.patch"
       }
     }
   }
