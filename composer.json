@@ -19,5 +19,12 @@
     "drupal/paragraphs": "^1.8.0",
     "symfony/css-selector": "^6.2",
     "symfony/dom-crawler": "^6.2"
+  },
+  "extra": {
+    "patches": {
+      "geshi/geshi": {
+        "Use MDN links for HTML5 syntax highlighting": "https://raw.githubusercontent.com/Ambient-Impact/drupal-ambientimpact-paragraphs/2.x/patches/geshi/geshi/html5-mdn-urls.patch"
+      }
+    }
   }
 }

@@ -1,0 +1,13 @@
+diff --git a/src/geshi/html5.php b/src/geshi/html5.php
+index f6316f7..0950b30 100644
+--- a/src/geshi/html5.php
++++ b/src/geshi/html5.php
+@@ -165,7 +165,7 @@ $language_data = array (
+             )
+         ),
+     'URLS' => array(
+-        2 => 'http://december.com/html/4/element/{FNAMEL}.html',
++        2 => 'https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/{FNAMEL}',
+         3 => ''
+         ),
+     'OOLANG' => false,

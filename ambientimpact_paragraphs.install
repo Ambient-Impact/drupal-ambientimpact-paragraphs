@@ -27,3 +27,15 @@ function ambientimpact_paragraphs_update_9202(): void {
   \Drupal::service('module_installer')->install(['hux']);
 
 }
+
+/**
+ * Invalidate rendered output and GeSHi filter tags for HTML5 MDN patch.
+ */
+function ambientimpact_paragraphs_update_9203(): void {
+
+  \Drupal::service('cache_tags.invalidator')->invalidateTags([
+    'geshifilter',
+    'rendered',
+  ]);
+
+}
